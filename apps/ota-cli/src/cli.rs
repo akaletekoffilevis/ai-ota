@@ -24,6 +24,8 @@ pub enum Command {
     Package(PackageArgs),
     /// Generate keys, sign packages and verify signatures.
     Sign(SignArgs),
+    /// Compare models and check target fit.
+    Model(ModelArgs),
 }
 
 /// `ota package` subcommands.
@@ -158,4 +160,49 @@ pub struct VerifyArgs {
     pub key: PathBuf,
     /// Signed `.otapkg` file to verify.
     pub input: PathBuf,
+}
+
+/// `ota model` subcommands.
+#[derive(Debug, Args)]
+pub struct ModelArgs {
+    /// Model operation to run.
+    #[command(subcommand)]
+    pub command: ModelCommand,
+}
+
+/// Model comparison and fit checks.
+#[derive(Debug, Subcommand)]
+pub enum ModelCommand {
+    /// Compare two `.otapkg` packages (manifest + payload hash).
+    Diff(DiffArgs),
+    /// Check whether a package fits a target profile.
+    Fit(FitArgs),
+}
+
+/// Arguments for `ota model diff`.
+#[derive(Debug, Args)]
+pub struct DiffArgs {
+    /// First `.otapkg` file.
+    pub left: PathBuf,
+    /// Second `.otapkg` file.
+    pub right: PathBuf,
+}
+
+/// Arguments for `ota model fit`.
+#[derive(Debug, Args)]
+pub struct FitArgs {
+    /// `.otapkg` file to check.
+    pub input: PathBuf,
+    /// Target RAM budget in bytes.
+    #[arg(long, default_value_t = 16384)]
+    pub ram_bytes: u64,
+    /// Target flash budget in bytes.
+    #[arg(long, default_value_t = 1048576)]
+    pub flash_bytes: u64,
+    /// Maximum package size in bytes.
+    #[arg(long, default_value_t = 1048576)]
+    pub max_package_bytes: u64,
+    /// Model arena size in bytes (user-supplied hint).
+    #[arg(long, default_value_t = 0)]
+    pub arena_bytes: u64,
 }

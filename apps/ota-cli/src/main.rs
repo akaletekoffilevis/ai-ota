@@ -8,6 +8,7 @@
 
 mod cli;
 mod io;
+mod model;
 mod package;
 mod sign;
 
@@ -20,5 +21,6 @@ fn main() -> Result<()> {
     match Cli::parse().command {
         Command::Package(args) => package::run(args),
         Command::Sign(args) => sign::run(args),
+        Command::Model(args) => model::run(args),
     }
 }
