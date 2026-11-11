@@ -41,10 +41,15 @@ static ALLOC: CountingAllocator = CountingAllocator;
 
 fn package_bytes() -> Vec<u8> {
     let payload = vec![0x5a; 4096];
-    PackageBuilder::new("ram-budget", Version::new(1, 0, 0), "generic", Quantization::Int8)
-        .with_payload(payload)
-        .build_unsigned()
-        .expect("build")
+    PackageBuilder::new(
+        "ram-budget",
+        Version::new(1, 0, 0),
+        "generic",
+        Quantization::Int8,
+    )
+    .with_payload(payload)
+    .build_unsigned()
+    .expect("build")
 }
 
 #[test]
