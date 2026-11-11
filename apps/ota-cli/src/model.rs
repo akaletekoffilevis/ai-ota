@@ -32,9 +32,16 @@ fn diff(args: &DiffArgs) -> Result<()> {
 
     println!("field            left                          right");
     println!("model_name       {:<30} {}", lm.model_name, rm.model_name);
-    println!("model_version    {:<30} {}", lm.model_version, rm.model_version);
+    println!(
+        "model_version    {:<30} {}",
+        lm.model_version, rm.model_version
+    );
     println!("target           {:<30} {}", lm.target, rm.target);
-    println!("quantization     {:<30} {}", lm.quantization.as_str(), rm.quantization.as_str());
+    println!(
+        "quantization     {:<30} {}",
+        lm.quantization.as_str(),
+        rm.quantization.as_str()
+    );
     println!("payload_len      {:<30} {}", lm.payload_len, rm.payload_len);
     println!("chunk_count      {:<30} {}", lm.chunk_count, rm.chunk_count);
     println!(
@@ -70,7 +77,10 @@ fn fit(args: &FitArgs) -> Result<()> {
             package_size, args.max_package_bytes
         );
     } else {
-        println!("OK:   package size {} <= {}", package_size, args.max_package_bytes);
+        println!(
+            "OK:   package size {} <= {}",
+            package_size, args.max_package_bytes
+        );
     }
     if payload_size + arena > args.flash_bytes {
         ok = false;
@@ -79,7 +89,10 @@ fn fit(args: &FitArgs) -> Result<()> {
             payload_size, arena, args.flash_bytes
         );
     } else {
-        println!("OK:   payload {} + arena {} <= flash {}", payload_size, arena, args.flash_bytes);
+        println!(
+            "OK:   payload {} + arena {} <= flash {}",
+            payload_size, arena, args.flash_bytes
+        );
     }
     if arena > args.ram_bytes {
         ok = false;
